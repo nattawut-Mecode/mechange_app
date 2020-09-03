@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mechange_app/provider/Language.dart';
 import 'package:mechange_app/provider/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -28,20 +29,111 @@ class _SettingsPageState extends State<SettingsPage>
     _controller.dispose();
   }
 
+  Widget languageButton(bool active, Function action, String text) {
+    return SizedBox(
+      width: 45,
+      child: FlatButton(
+        padding: EdgeInsets.only(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: TextStyle(fontFamily: "Kanit"),
+            ),
+            Container(
+              width: 25,
+              height: 2.5,
+              color: active
+                  ? Color.fromRGBO(143, 204, 147, 1)
+                  : Colors.transparent,
+            )
+          ],
+        ),
+        onPressed: action,
+      ),
+    );
+  }
+
+  Widget selectLanguageBar(LanguageProvider language) {
+    return SizedBox(
+      width: 150,
+      height: 37.5,
+      child: Row(
+        children: [
+          languageButton(language.language == Language.EN, () {
+            language.changeLanguage(Language.EN);
+          }, "EN"),
+          languageButton(language.language == Language.TH, () {
+            language.changeLanguage(Language.TH);
+          }, "ไทย"),
+          languageButton(language.language == Language.CN, () {
+            language.changeLanguage(Language.CN);
+          }, "中文")
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
+    final language = Provider.of<LanguageProvider>(context);
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(left: 45,top: 32,right: 30),
+        padding: EdgeInsets.only(left: 27.5, top: 32, right: 10),
         child: Column(
           children: [
             FlatButton(
               padding: EdgeInsets.only(),
-              child: ListTile(contentPadding: EdgeInsets.only(),leading : Text("About", style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600))),
+              child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 10),
+                  leading: Text("About",
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
             ),
-            ListTile(contentPadding: EdgeInsets.only(),leading : Text("Language", style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600)))
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 10),
+              leading: Text("Language",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              trailing: selectLanguageBar(language),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 10),
+              leading: Text("Dark Mode",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              trailing: Switch(activeColor: theme.themePrimary,value: theme.brightness == Brightness.dark, onChanged: (value){
+                theme.brightness == Brightness.dark? theme.switchToDarkMode(false):theme.switchToDarkMode(true);
+              }),
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(),
+              child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 10),
+                  leading: Text("Contact Us",
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600))),
+              onPressed: () {},
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(),
+              child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 10),
+                  leading: Text("Rate App",
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600))),
+              onPressed: () {},
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(),
+              child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 10),
+                  leading: Text("Share App",
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600))),
+              onPressed: () {},
+            ),
           ],
         ),
       ),

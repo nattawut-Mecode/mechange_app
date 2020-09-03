@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mechange_app/models/language.dart';
+import 'package:mechange_app/provider/Language.dart';
 
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,9 @@ void main() {
         create: (_) =>
             ThemeProvider(themePrimary: Color.fromRGBO(5, 105, 107, 1))),
     ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
-    ChangeNotifierProvider(create: (_) => BuyProvider())
+    ChangeNotifierProvider(create: (_) => BuyProvider()),
+    ChangeNotifierProvider(
+        create: (_) => LanguageProvider(language: Language.EN))
   ], child: MyApp()));
 }
 
@@ -43,7 +47,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   var _listCountry = <String>[
     "USD",
     "JPY",
@@ -78,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String dropdownValue = "USD";
 
-  BottomNavigationBarItem bottomNavigator(bool active, String activeAsset,String unActiveAsset, String title, ThemeProvider themeProvider) {
+  BottomNavigationBarItem bottomNavigator(bool active, String activeAsset,
+      String unActiveAsset, String title, ThemeProvider themeProvider) {
     return BottomNavigationBarItem(
         icon: SvgPicture.asset(active ? activeAsset : unActiveAsset),
         title: Text(
@@ -86,6 +90,44 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextStyle(
               color: active ? themeProvider.themePrimary : Colors.black),
         ));
+  }
+
+  AppBar appBar(BottomNavigationIndexProvider selectedIndex,
+      ThemeProvider theme, BuyProvider isBuy) {
+    return AppBar(
+        title: Row(
+          children: [
+            selectedIndex.selectedIndex == 0
+                ? SvgPicture.asset(
+                    "assets/logos/Logo_White_nobg.svg",
+                    width: 30,
+                    height: 30,
+                  )
+                : Container(),
+            SizedBox(width: 15),
+            Text(_listTitle[selectedIndex.selectedIndex],
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700)),
+          ],
+        ),
+        actions: [
+          selectedIndex.selectedIndex == 0
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 7.5),
+                  child: IconButton(
+                      icon: Image.asset(
+                        "assets/icons/calculator.png",
+                        width: 25,
+                        height: 25,
+                      ),
+                      onPressed: () {}),
+                )
+              : Container()
+        ],
+        backgroundColor: theme.themePrimary,
+        bottom: bottomAppBar(selectedIndex, isBuy, theme));
   }
 
   Widget dropDownCountry() {
@@ -174,7 +216,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget bottomAppBar(BottomNavigationIndexProvider selectedIndex,BuyProvider isBuy, ThemeProvider theme) {
+  Widget bottomAppBar(BottomNavigationIndexProvider selectedIndex,
+      BuyProvider isBuy, ThemeProvider theme) {
     return PreferredSize(
       preferredSize:
           Size.fromHeight(selectedIndex.selectedIndex == 0 ? 52.5 : 0),
@@ -202,39 +245,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final selectedIndex = Provider.of<BottomNavigationIndexProvider>(context);
     final isBuy = Provider.of<BuyProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-          title: Row(
-            children: [
-              SvgPicture.asset(
-                "assets/logos/Logo_White_nobg.svg",
-                width: 30,
-                height: 30,
-              ),
-              SizedBox(width: 15),
-              Text(_listTitle[selectedIndex.selectedIndex],
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700)),
-            ],
-          ),
-          actions: [
-            selectedIndex.selectedIndex == 0
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 7.5),
-                    child: IconButton(
-                        icon: Image.asset(
-                          "assets/icons/calculator.png",
-                          width: 25,
-                          height: 25,
-                        ),
-                        onPressed: () {}),
-                  )
-                : Container()
-          ],
-          backgroundColor: theme.themePrimary,
-          bottom: bottomAppBar(selectedIndex, isBuy, theme)),
-      body: _pages[selectedIndex.selectedIndex] ,
+      appBar: appBar(selectedIndex, theme, isBuy),
+      body: _pages[selectedIndex.selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: (index) {

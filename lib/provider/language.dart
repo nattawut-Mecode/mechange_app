@@ -8,5 +8,6 @@ class LanguageProvider with ChangeNotifier{
 
   changeLanguage(Language language){
     this.language = language;
+    notifyListeners();
   }
 }
