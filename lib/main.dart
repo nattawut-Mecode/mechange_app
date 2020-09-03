@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mechange_app/provider/bottom_navigation_index.dart';
+import 'package:mechange_app/provider/is_buy.dart';
 import 'package:mechange_app/provider/theme.dart';
+import 'package:mechange_app/widgets/country_dropdown.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-        create: (_) =>
-            ThemeProvider(themePrimary: Color.fromRGBO(5, 105, 107, 1))),
-    ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider())
+    ChangeNotifierProvider(create: (_) => ThemeProvider(themePrimary: Color.fromRGBO(5, 105, 107, 1))),
+    ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
+    ChangeNotifierProvider(create: (_) => BuyProvider())
   ], child: MyApp()));
 }
 
@@ -39,18 +40,36 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  String title = "MeChange";
+  String dropdownValue = "USD";
+
+  var _listCountry = <String>[
+    "USD",
+    "JPY",
+    "IDR",
+    "PHP",
+    "RUB",
+  ];
+
+   static const List<String> _listTitle = [
+    "MeChange",
+    "Historical Trends",
+    "Financial News",
+    "Explore",
+    "Settings",
+  ];
 
   BottomNavigationBarItem bottomNavigator(bool active,String activeAsset,String unActiveAsset,String title,ThemeProvider themeProvider){
     return BottomNavigationBarItem(
               icon: SvgPicture.asset(active?activeAsset:unActiveAsset),
               title: Text(title,style: TextStyle(color: active? themeProvider.themePrimary:Colors.black),));
   }
+  
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
     final selectedIndex = Provider.of<BottomNavigationIndexProvider>(context);
+    final isBuy = Provider.of<BuyProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -61,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 30,
             ),
             SizedBox(width: 15),
-            Text(title,
+            Text(_listTitle[selectedIndex.selectedIndex],
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -69,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: [
-          Padding(
+          selectedIndex.selectedIndex == 0? Padding(
             padding: const EdgeInsets.only(right: 7.5),
             child: IconButton(
                 icon: Image.asset(
@@ -78,9 +97,93 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 25,
                 ),
                 onPressed: () {}),
-          )
+          ):Container()
         ],
         backgroundColor: theme.themePrimary,
+        bottom: PreferredSize(
+            preferredSize: Size.fromHeight(selectedIndex.selectedIndex==0? 52.5:0),
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              opacity: selectedIndex.selectedIndex == 0? 1:0,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 350),
+                height: selectedIndex.selectedIndex == 0? 48:0,
+                color: Colors.white ,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: DropdownButton<String>(
+                          value: dropdownValue,
+                          icon: Icon(Icons.arrow_drop_down,size: 30,),
+                          iconSize: 24,
+                          elevation: 16,
+                          underline: Container(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              dropdownValue = newValue;
+                              //currencyController.add(newValue);
+                            });
+                          },
+                          items: _listCountry.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: CountryDropDownItem(shortCurrency: value,),
+                            );
+                          }).toList(),
+                        )
+                      )
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 22),
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: (){
+                                isBuy.changeBuyMode(true);
+                              },
+                            child: Container(
+                              width: 65,
+                              height: 35,
+                              child: Center(
+                                child: Text("I BUY",style: TextStyle(fontSize: 12.5,color: isBuy.isBuy? Colors.white:Colors.grey)),
+                              ),
+                              decoration: BoxDecoration(
+                                color: isBuy.isBuy? theme.themePrimary:Colors.transparent,
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 18,),
+                          GestureDetector(
+                            onTap: (){
+                              isBuy.changeBuyMode(false);
+                            },
+                            child: Container(
+                              width: 65,
+                              height: 35,
+                              child: Center(
+                                child: Text("I SELL",style: TextStyle(fontSize: 12.5,color: isBuy.isBuy == false? Colors.white:Colors.grey),),
+                              ),
+                              decoration: BoxDecoration(
+                                color: isBuy.isBuy == false? theme.themePrimary:Colors.transparent,
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                            ),
+                          )
+                        ],
+                          ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
       ),
       body: Center(
         child: Column(
