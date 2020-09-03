@@ -26,10 +26,12 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: "Raleway"),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
