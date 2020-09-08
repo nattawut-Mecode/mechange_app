@@ -14,5 +14,5 @@ class ThemeProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  ThemeProvider({@required this.themePrimary});
+  ThemeProvider({@required this.themePrimary,@required this.brightness});
 }

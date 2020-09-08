@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mechange_app/widgets/calculate_bottomsheet.dart';
@@ -18,9 +19,10 @@ import 'widgets/country_dropdown.dart';
 import 'pages/settings.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
+  runApp(
+    MultiProvider(providers: [
     ChangeNotifierProvider(
-        create: (_) => ThemeProvider(themePrimary: ThemeApp.primaryColor)),
+        create: (_) => ThemeProvider(themePrimary: ThemeApp.primaryColor,brightness: SchedulerBinding.instance.window.platformBrightness)),
     ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
     ChangeNotifierProvider(create: (_) => BuyProvider()),
     ChangeNotifierProvider(
