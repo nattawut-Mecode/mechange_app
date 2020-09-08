@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:mechange_app/models/language.dart';
-import 'package:mechange_app/provider/Language.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/svg.dart';
 
+import 'localization/demo_locallization.dart';
+import 'themes/theme.dart';
 import 'provider/bottom_navigation_index.dart';
 import 'provider/is_buy.dart';
 import 'provider/theme.dart';
+import 'provider/language.dart';
 import 'widgets/country_dropdown.dart';
 import 'pages/settings.dart';
 
@@ -19,7 +22,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
     ChangeNotifierProvider(create: (_) => BuyProvider()),
     ChangeNotifierProvider(
-        create: (_) => LanguageProvider(language: Language.EN))
+        create: (_) => LocaleProvider(locale: Locale("EN",'en')))
   ], child: MyApp()));
 }
 
@@ -27,9 +30,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
+    final locale = Provider.of<LocaleProvider>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      locale: locale.locale,
+      localizationsDelegates: [
+        // ... app-specific localization delegate[s] here
+        DemoLocalization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],  
+      supportedLocales: [
+        const Locale('en', 'EN'), // English, no country code
+        const Locale('th', 'TH'), // Hebrew, no country code
+        const Locale('cn', 'CN'), // Chinese *See Advanced Locales below*
+        // ... other locales the app supports
+      ],
       theme: ThemeData(
           brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -84,13 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
   String dropdownValue = "USD";
 
   BottomNavigationBarItem bottomNavigator(bool active, String activeAsset,
-      String unActiveAsset, String title, ThemeProvider themeProvider) {
+      String unActiveAsset,String darkModeAssets, String title, ThemeProvider themeProvider) {
     return BottomNavigationBarItem(
-        icon: SvgPicture.asset(active ? activeAsset : unActiveAsset),
+        icon: SvgPicture.asset((active ? activeAsset : themeProvider.brightness == Brightness.dark?darkModeAssets:unActiveAsset)),
         title: Text(
           title,
           style: TextStyle(
-              color: active ? themeProvider.themePrimary : Colors.black),
+              color: active ? themeProvider.themePrimary : (themeProvider.brightness == Brightness.dark? Colors.white:Colors.black)),
         ));
   }
 
@@ -107,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 : Container(),
             SizedBox(width: 15),
-            Text(_listTitle[selectedIndex.selectedIndex],
+            Text(DemoLocalization.of(context).getTranslateValue("home_page"),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -229,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: AnimatedContainer(
           duration: Duration(milliseconds: 350),
           height: selectedIndex.selectedIndex == 0 ? 48 : 0,
-          color: Colors.white,
+          color: theme.brightness == Brightness.dark? ThemeApp.darkColors:Colors.white,
           child: Row(
             children: <Widget>[
               dropDownCountry(),
@@ -260,30 +278,35 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIndex.selectedIndex == 0,
               "assets/icons/usd-circle_select.svg",
               "assets/icons/usd-circle.svg",
+              "assets/icons/usd-circle white.svg",
               "Currency",
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 1,
               "assets/icons/analytics_select.svg",
               "assets/icons/analytics.svg",
+              "assets/icons/analytics white.svg",
               "Trends",
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 2,
               "assets/icons/rss_select.svg",
               "assets/icons/rss.svg",
+              "assets/icons/rss white.svg",
               "News",
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 3,
               "assets/icons/map-marked__select.svg",
               "assets/icons/map-marked.svg",
+              "assets/icons/map-marked white.svg",
               "News",
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 4,
               "assets/icons/cog_select.svg",
               "assets/icons/cog.svg",
+              "assets/icons/cog white.svg",
               "Settings",
               theme),
         ],

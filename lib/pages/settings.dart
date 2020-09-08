@@ -55,20 +55,20 @@ class _SettingsPageState extends State<SettingsPage>
     );
   }
 
-  Widget selectLanguageBar(LanguageProvider language) {
+  Widget selectLanguageBar(LocaleProvider language) {
     return SizedBox(
       width: 150,
       height: 37.5,
       child: Row(
         children: [
-          languageButton(language.language == Language.EN, () {
-            language.changeLanguage(Language.EN);
+          languageButton(language.locale == Locale("en",'EN'), () {
+            language.changeLanguage(Locale("EN",'en'));
           }, "EN"),
-          languageButton(language.language == Language.TH, () {
-            language.changeLanguage(Language.TH);
+          languageButton(language.locale == Locale("th","TH"), () {
+            language.changeLanguage(Locale("TH","th"));
           }, "ไทย"),
-          languageButton(language.language == Language.CN, () {
-            language.changeLanguage(Language.CN);
+          languageButton(language.locale == Locale("cn","CN"), () {
+            language.changeLanguage(Locale("CN","cn"));
           }, "中文")
         ],
       ),
@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
-    final language = Provider.of<LanguageProvider>(context);
+    final language = Provider.of<LocaleProvider>(context);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(left: 27.5, top: 32, right: 10),
