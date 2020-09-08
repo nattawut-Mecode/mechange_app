@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   flutter_localizations:
     sdk: flutter
 
@@ -31,7 +31,8 @@ dependencies:
   syncfusion_flutter_charts: ^18.1.42
   http: ^0.12.1
   provider: ^4.3.2+1
-
+  dio: ^3.0.10
+  animations: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ flutter:
     - assets/logos/
     - assets/flags/
     - assets/exchangers/
+    - lib/lang/
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

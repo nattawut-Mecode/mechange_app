@@ -1,4 +1,25 @@
 {
-    "home_page": "หน้าหลัก",
-    "personal_info": "ข้อมูลส่วนตัว"
+    "homepage_title": "MeChange",
+    "trends_title": "แนวโน้มสถิติ",
+    "news_title": "ข่าวสาร",
+    "explore_title": "สำรวจ",
+    "settings_title":"ตั้งค่า",
+
+    "settings_about":"เกี่ยวกับ",
+    "settings_language":"ภาษา",
+    "settings_darkmode":"ดาร์กโหมด",
+    "settings_contactus":"ติดต่อเรา",
+    "settings_rateapp":"ให้คะแนนแอพพริเคชั่น",
+    "settings_shareapp":"แชร์แอพพริเคชั่น",
+
+    "navigation_currency":"สกุลเงิน",
+    "navigation_trends":"สถิติ",
+    "navigation_news":"ข่าวสาร",
+    "navigation_explore":"สำรวจ",
+    "navigation_settings":"ตั้งค่า",
+
+    "currency_ibuy":"ซื้อ",
+    "currency_isell":"ขาย",
+
+    "personal_info": "Personal Information"
 }

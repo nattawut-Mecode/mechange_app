@@ -1,4 +1,25 @@
 {
-    "home_page": "Home Page",
+    "homepage_title": "MeChange",
+    "trends_title": "Historical Trends",
+    "news_title": "Financial News",
+    "explore_title": "Explore",
+    "settings_title":"Settings",
+    
+    "settings_about":"About",
+    "settings_language":"Language",
+    "settings_darkmode":"Dark Mode",
+    "settings_contactus":"Contact Us",
+    "settings_rateapp":"Rate App",
+    "settings_shareapp":"Share App",
+
+    "navigation_currency":"Currency",
+    "navigation_trends":"Trends",
+    "navigation_news":"News",
+    "navigation_explore":"Explores",
+    "navigation_settings":"Settings",
+    
+    "currency_ibuy":"I BUY",
+    "currency_isell":"I SELL",
+
     "personal_info": "Personal Information"
 }

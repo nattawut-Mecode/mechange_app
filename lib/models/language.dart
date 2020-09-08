@@ -1,5 +1,5 @@
 enum Language{
   EN,
   TH,
-  CN
+  ZH
 }

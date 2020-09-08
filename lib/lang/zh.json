@@ -1,0 +1,25 @@
+{
+    "homepage_title": "MeChange",
+    "trends_title": "歷史趨勢",
+    "news_title": "財經新聞",
+    "explore_title": "探索",
+    "settings_title":"設定",
+    
+    "settings_about":"關於",
+    "settings_language":"語言",
+    "settings_darkmode":"暗模式",
+    "settings_contactus":"聯繫我們",
+    "settings_rateapp":"評價應用",
+    "settings_shareapp":"分享應用",
+
+    "navigation_currency":"貨幣",
+    "navigation_trends":"發展趨勢",
+    "navigation_news":"新聞",
+    "navigation_explore":"探索",
+    "navigation_settings":"設定值",
+    
+    "currency_ibuy":"購買",
+    "currency_isell":"賣",
+
+    "personal_info": "Personal Information"
+}

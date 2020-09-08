@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mechange_app/widgets/calculate_bottomsheet.dart';
 
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:animations/animations.dart';
 
-import 'localization/demo_locallization.dart';
-import 'themes/theme.dart';
+import 'internationalization/custome_internationalization.dart';
+import 'internationalization/util.dart';
+import 'models/language.dart';
+import 'provider/language.dart';
+import 'themes/themes.dart';
 import 'provider/bottom_navigation_index.dart';
 import 'provider/is_buy.dart';
 import 'provider/theme.dart';
-import 'provider/language.dart';
 import 'widgets/country_dropdown.dart';
 import 'pages/settings.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-        create: (_) =>
-            ThemeProvider(themePrimary: Color.fromRGBO(5, 105, 107, 1))),
+        create: (_) => ThemeProvider(themePrimary: ThemeApp.primaryColor)),
     ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
     ChangeNotifierProvider(create: (_) => BuyProvider()),
     ChangeNotifierProvider(
-        create: (_) => LocaleProvider(locale: Locale("EN",'en')))
+        create: (_) => LanguageProvider(language: Language.EN))
   ], child: MyApp()));
 }
 
@@ -30,25 +32,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
-    final locale = Provider.of<LocaleProvider>(context);
+    final language = Provider.of<LanguageProvider>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      locale: locale.locale,
+      locale: getLocalefromLanguage(language.language),
       localizationsDelegates: [
         // ... app-specific localization delegate[s] here
-        DemoLocalization.delegate,
+        CustomeLocalizaation.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-      ],  
+      ],
       supportedLocales: [
         const Locale('en', 'EN'), // English, no country code
         const Locale('th', 'TH'), // Hebrew, no country code
-        const Locale('cn', 'CN'), // Chinese *See Advanced Locales below*
+        const Locale('zh', 'ZH'), // Chinese *See Advanced Locales below*
         // ... other locales the app supports
       ],
       theme: ThemeData(
+          primaryColor: Colors.green,
           brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: "Raleway"),
@@ -75,45 +78,55 @@ class _MyHomePageState extends State<MyHomePage> {
     "RUB",
   ];
 
-  static const List<String> _listTitle = [
-    "MeChange",
-    "Historical Trends",
-    "Financial News",
-    "Explore",
-    "Settings",
-  ];
+  List _listTitle(BuildContext context) {
+    return [
+      CustomeLocalizaation.of(context).getTranslateValue("homepage_title"),
+      CustomeLocalizaation.of(context).getTranslateValue("trends_title"),
+      CustomeLocalizaation.of(context).getTranslateValue("news_title"),
+      CustomeLocalizaation.of(context).getTranslateValue("explore_title"),
+      CustomeLocalizaation.of(context).getTranslateValue("settings_title")
+    ];
+  }
 
   List<Widget> _pages = [
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.red,
-    ),
-    Container(
-      color: Colors.purple,
-    ),
-    Container(
-      color: Colors.orange,
-    ),
+    Container(),
+    Container(),
+    Container(),
+    Container(),
     SettingsPage()
   ];
 
   String dropdownValue = "USD";
 
-  BottomNavigationBarItem bottomNavigator(bool active, String activeAsset,
-      String unActiveAsset,String darkModeAssets, String title, ThemeProvider themeProvider) {
+  BottomNavigationBarItem bottomNavigator(
+      bool active,
+      String activeAsset,
+      String unActiveAsset,
+      String darkModeAssets,
+      String title,
+      ThemeProvider themeProvider) {
     return BottomNavigationBarItem(
-        icon: SvgPicture.asset((active ? activeAsset : themeProvider.brightness == Brightness.dark?darkModeAssets:unActiveAsset)),
+        icon: Padding(
+          padding: const EdgeInsets.only(bottom: 2.5),
+          child: SvgPicture.asset((active
+              ? activeAsset
+              : themeProvider.brightness == Brightness.dark
+                  ? darkModeAssets
+                  : unActiveAsset)),
+        ),
         title: Text(
           title,
           style: TextStyle(
-              color: active ? themeProvider.themePrimary : (themeProvider.brightness == Brightness.dark? Colors.white:Colors.black)),
+              color: active
+                  ? themeProvider.themePrimary
+                  : (themeProvider.brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black)),
         ));
   }
 
   AppBar appBar(BottomNavigationIndexProvider selectedIndex,
-      ThemeProvider theme, BuyProvider isBuy) {
+      ThemeProvider theme, BuyProvider isBuy, LanguageProvider language) {
     return AppBar(
         title: Row(
           children: [
@@ -125,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 : Container(),
             SizedBox(width: 15),
-            Text(DemoLocalization.of(context).getTranslateValue("home_page"),
+            Text(_listTitle(context)[selectedIndex.selectedIndex],
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -142,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 25,
                         height: 25,
                       ),
-                      onPressed: () {}),
+                      onPressed: showBottomSheetModel),
                 )
               : Container()
         ],
@@ -196,7 +209,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 65,
                 height: 35,
                 child: Center(
-                  child: Text("I BUY",
+                  child: Text(
+                      CustomeLocalizaation.of(context)
+                          .getTranslateValue("currency_ibuy"),
                       style: TextStyle(
                           fontSize: 12.5,
                           color: isBuy.isBuy ? Colors.white : Colors.grey)),
@@ -216,7 +231,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 35,
                 child: Center(
                   child: Text(
-                    "I SELL",
+                    CustomeLocalizaation.of(context)
+                        .getTranslateValue("currency_isell"),
                     style: TextStyle(
                         fontSize: 12.5,
                         color:
@@ -247,7 +263,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: AnimatedContainer(
           duration: Duration(milliseconds: 350),
           height: selectedIndex.selectedIndex == 0 ? 48 : 0,
-          color: theme.brightness == Brightness.dark? ThemeApp.darkColors:Colors.white,
+          color: theme.brightness == Brightness.dark
+              ? ThemeApp.darkColor
+              : Colors.white,
           child: Row(
             children: <Widget>[
               dropDownCountry(),
@@ -259,14 +277,37 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  showBottomSheetModel() {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (builder) {
+          return CalculatorBottomSheet(
+            form: "USD",
+            to: dropdownValue,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
     final selectedIndex = Provider.of<BottomNavigationIndexProvider>(context);
     final isBuy = Provider.of<BuyProvider>(context);
+    final language = Provider.of<LanguageProvider>(context);
     return Scaffold(
-      appBar: appBar(selectedIndex, theme, isBuy),
-      body: _pages[selectedIndex.selectedIndex],
+      appBar: appBar(selectedIndex, theme, isBuy, language),
+      body: PageTransitionSwitcher(
+        duration: Duration(milliseconds: 500),
+        transitionBuilder: (child, animation, secondaryAniamtion) {
+          return SharedAxisTransition(
+              child: child,
+              animation: animation,
+              secondaryAnimation: secondaryAniamtion,
+              transitionType: SharedAxisTransitionType.vertical);
+        },
+        child: _pages[selectedIndex.selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
@@ -279,35 +320,40 @@ class _MyHomePageState extends State<MyHomePage> {
               "assets/icons/usd-circle_select.svg",
               "assets/icons/usd-circle.svg",
               "assets/icons/usd-circle white.svg",
-              "Currency",
+              CustomeLocalizaation.of(context)
+                  .getTranslateValue("navigation_currency"),
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 1,
               "assets/icons/analytics_select.svg",
               "assets/icons/analytics.svg",
               "assets/icons/analytics white.svg",
-              "Trends",
+              CustomeLocalizaation.of(context)
+                  .getTranslateValue("navigation_trends"),
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 2,
               "assets/icons/rss_select.svg",
               "assets/icons/rss.svg",
               "assets/icons/rss white.svg",
-              "News",
+              CustomeLocalizaation.of(context)
+                  .getTranslateValue("navigation_news"),
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 3,
               "assets/icons/map-marked__select.svg",
               "assets/icons/map-marked.svg",
               "assets/icons/map-marked white.svg",
-              "News",
+              CustomeLocalizaation.of(context)
+                  .getTranslateValue("navigation_explore"),
               theme),
           bottomNavigator(
               selectedIndex.selectedIndex == 4,
               "assets/icons/cog_select.svg",
               "assets/icons/cog.svg",
               "assets/icons/cog white.svg",
-              "Settings",
+              CustomeLocalizaation.of(context)
+                  .getTranslateValue("navigation_settings"),
               theme),
         ],
       ),

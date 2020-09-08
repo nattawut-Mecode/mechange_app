@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mechange_app/models/language.dart';
 
-class LocaleProvider with ChangeNotifier{
-  Locale locale;
+class LanguageProvider with ChangeNotifier{
+  Language language;
 
-  LocaleProvider({@required this.locale});
+  LanguageProvider({@required this.language});
 
-  changeLanguage(Locale language){
-    this.locale = language;
+  changeLanguage(Language language){
+    this.language = language;
     notifyListeners();
   }
 }

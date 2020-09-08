@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mechange_app/provider/Language.dart';
-import 'package:mechange_app/provider/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../internationalization/custome_internationalization.dart';
+import '../provider/language.dart';
+import '../provider/theme.dart';
 import '../models/language.dart';
+import '../utils/disable_glow.dart';
+
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -14,7 +17,6 @@ class _SettingsPageState extends State<SettingsPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  Language _selectL = Language.EN;
   bool isDarkMode = false;
 
   @override
@@ -55,20 +57,20 @@ class _SettingsPageState extends State<SettingsPage>
     );
   }
 
-  Widget selectLanguageBar(LocaleProvider language) {
+  Widget selectLanguageBar(LanguageProvider language) {
     return SizedBox(
       width: 150,
       height: 37.5,
       child: Row(
         children: [
-          languageButton(language.locale == Locale("en",'EN'), () {
-            language.changeLanguage(Locale("EN",'en'));
+          languageButton(language.language == Language.EN, () {
+            language.changeLanguage(Language.EN);
           }, "EN"),
-          languageButton(language.locale == Locale("th","TH"), () {
-            language.changeLanguage(Locale("TH","th"));
+          languageButton(language.language == Language.TH, () {
+            language.changeLanguage(Language.TH);
           }, "ไทย"),
-          languageButton(language.locale == Locale("cn","CN"), () {
-            language.changeLanguage(Locale("CN","cn"));
+          languageButton(language.language == Language.ZH, () {
+            language.changeLanguage(Language.ZH);
           }, "中文")
         ],
       ),
@@ -78,30 +80,31 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
-    final language = Provider.of<LocaleProvider>(context);
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(left: 27.5, top: 32, right: 10),
-        child: Column(
+    final language = Provider.of<LanguageProvider>(context);
+    return Padding(
+      padding: EdgeInsets.only(left: 27.5, top: 32, right: 10),
+      child: ScrollConfiguration(
+        behavior: DisableGlow(),
+        child: ListView(
           children: [
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 10),
-                  leading: Text("About",
+                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_about"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 10),
-              leading: Text("Language",
+              leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_language"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
               trailing: selectLanguageBar(language),
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 10),
-              leading: Text("Dark Mode",
+              leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_darkmode"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
               trailing: Switch(activeColor: theme.themePrimary,value: theme.brightness == Brightness.dark, onChanged: (value){
                 theme.brightness == Brightness.dark? theme.switchToDarkMode(false):theme.switchToDarkMode(true);
@@ -111,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage>
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 10),
-                  leading: Text("Contact Us",
+                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_contactus"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
@@ -120,7 +123,7 @@ class _SettingsPageState extends State<SettingsPage>
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 10),
-                  leading: Text("Rate App",
+                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_rateapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
@@ -129,7 +132,7 @@ class _SettingsPageState extends State<SettingsPage>
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 10),
-                  leading: Text("Share App",
+                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_shareapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
