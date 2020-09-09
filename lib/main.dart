@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.green,
           brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: "Raleway"),
+          fontFamily: language.language == Language.TH?"Kanit":"Raleway"),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

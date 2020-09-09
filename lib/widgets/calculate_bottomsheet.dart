@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mechange_app/provider/language.dart';
+import 'package:mechange_app/provider/theme.dart';
+import 'package:provider/provider.dart';
 
 import '../themes/themes.dart';
 import 'country_dropdown.dart';
@@ -32,7 +35,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
 
   void calculateClick() {}
 
-  Widget calculatorButton() {
+  Widget calculatorButton(ThemeProvider themeProvider) {
     return Container(
       width: 110,
       height: 50,
@@ -45,21 +48,21 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
         child: Text(
           "Calculate",
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 14, fontWeight: FontWeight.bold, color: themeProvider.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white),
         ),
         color: Colors.green,
-        disabledColor: ThemeApp.disableColor,
+        disabledColor: themeProvider.brightness == Brightness.dark? Colors.grey[600]:ThemeApp.disableColor,
       ),
     );
   }
 
-  Widget textFieldAmout() {
+  Widget textFieldAmout(ThemeProvider themeProvider) {
     return Container(
       width: 165,
       height: 50,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(6)),
+          color: themeProvider.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white, borderRadius: BorderRadius.circular(6)),
       child: Padding(
         padding: const EdgeInsets.only(left: 15),
         child: TextField(
@@ -78,7 +81,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
     );
   }
 
-  Widget toDropDownLanguage() {
+  Widget toDropDownLanguage(ThemeProvider themeProvider) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +104,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
             margin: const EdgeInsets.only(left: 10),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(6)),
+                color: themeProvider.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white, borderRadius: BorderRadius.circular(6)),
             child: Center(
               child: DropdownButton<String>(
                 value: toDropDownValue,
@@ -131,7 +134,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
     );
   }
 
-  Widget fromDropDownLanguage() {
+  Widget fromDropDownLanguage(ThemeProvider themeProvider) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +157,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
             margin: const EdgeInsets.only(left: 37.5),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(7.5)),
+                color: themeProvider.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white, borderRadius: BorderRadius.circular(7.5)),
             child: Center(
               child: DropdownButton<String>(
                 value: fromDropDownValue,
@@ -194,6 +197,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(systemNavigationBarColor: ThemeApp.primaryColor));
     return Container(
@@ -226,13 +230,13 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
           Container(
             margin: const EdgeInsets.only(top: 25),
             child: Row(
-              children: <Widget>[fromDropDownLanguage(), toDropDownLanguage()],
+              children: <Widget>[fromDropDownLanguage(themeProvider), toDropDownLanguage(themeProvider)],
             ),
           ),
           Container(
             margin: const EdgeInsets.only(left: 39, top: 11),
             child: Row(
-              children: <Widget>[textFieldAmout(), calculatorButton()],
+              children: <Widget>[textFieldAmout(themeProvider), calculatorButton(themeProvider)],
             ),
           )
         ],
