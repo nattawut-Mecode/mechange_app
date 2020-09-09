@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage>
     final theme = Provider.of<ThemeProvider>(context);
     final language = Provider.of<LanguageProvider>(context);
     return Padding(
-      padding: EdgeInsets.only(left: 27.5, top: 32, right: 10),
+      padding: EdgeInsets.only(top: 32,),
       child: ScrollConfiguration(
         behavior: DisableGlow(),
         child: ListView(
@@ -90,20 +90,20 @@ class _SettingsPageState extends State<SettingsPage>
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 10),
+                  contentPadding: EdgeInsets.only(left: 35),
                   leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_about"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
             ),
             ListTile(
-              contentPadding: EdgeInsets.only(left: 10),
+              contentPadding: EdgeInsets.only(left: 35),
               leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_language"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
               trailing: selectLanguageBar(language),
             ),
             ListTile(
-              contentPadding: EdgeInsets.only(left: 10),
+              contentPadding: EdgeInsets.only(left: 35),
               leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_darkmode"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
               trailing: Switch(activeColor: theme.themePrimary,value: theme.brightness == Brightness.dark, onChanged: (value){
@@ -113,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage>
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 10),
+                  contentPadding: EdgeInsets.only(left: 35),
                   leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_contactus"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
@@ -122,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage>
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 10),
+                  contentPadding: EdgeInsets.only(left: 35),
                   leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_rateapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
@@ -131,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage>
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 10),
+                  contentPadding: EdgeInsets.only(left: 35),
                   leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_shareapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
