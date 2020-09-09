@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../data/infomation.dart';
 import '../internationalization/custome_internationalization.dart';
 import '../provider/language.dart';
 import '../provider/theme.dart';
 import '../models/language.dart';
 import '../utils/disable_glow.dart';
-
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -73,8 +74,25 @@ class _SettingsPageState extends State<SettingsPage>
     _controller = AnimationController(vsync: this);
   }
 
-  shareApplicationSocial(){
-    Share.share("https://apps.apple.com/th/app/mechange-thai-baht/id1221797659");
+  shareApplicationSocial() {
+    Share.share(
+        "https://apps.apple.com/th/app/mechange-thai-baht/id1221797659");
+  }
+
+  contractUsEmail() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: Infomation.contractEmail,
+      query:
+          'subject=Contract US&body=',
+    );
+
+    var url = params.toString();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -82,7 +100,9 @@ class _SettingsPageState extends State<SettingsPage>
     final theme = Provider.of<ThemeProvider>(context);
     final language = Provider.of<LanguageProvider>(context);
     return Padding(
-      padding: EdgeInsets.only(top: 32,),
+      padding: EdgeInsets.only(
+        top: 32,
+      ),
       child: ScrollConfiguration(
         behavior: DisableGlow(),
         child: ListView(
@@ -91,30 +111,54 @@ class _SettingsPageState extends State<SettingsPage>
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 35),
-                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_about"),
+                  leading: Text(
+                      CustomeLocalizaation.of(context)
+                          .getTranslateValue("settings_about"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 35),
-              leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_language"),
+              leading: Text(
+                  CustomeLocalizaation.of(context)
+                      .getTranslateValue("settings_language"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
               trailing: selectLanguageBar(language),
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 35),
-              leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_darkmode"),
+              leading: Text(
+                  CustomeLocalizaation.of(context)
+                      .getTranslateValue("settings_darkmode"),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-              trailing: Switch(activeColor: theme.themePrimary,value: theme.brightness == Brightness.dark, onChanged: (value){
-                theme.brightness == Brightness.dark? theme.switchToDarkMode(false):theme.switchToDarkMode(true);
-              }),
+              trailing: Switch(
+                  activeColor: theme.themePrimary,
+                  value: theme.brightness == Brightness.dark,
+                  onChanged: (value) {
+                    theme.brightness == Brightness.dark
+                        ? theme.switchToDarkMode(false)
+                        : theme.switchToDarkMode(true);
+                  }),
             ),
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 35),
-                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_contactus"),
+                  leading: Text(
+                      CustomeLocalizaation.of(context)
+                          .getTranslateValue("settings_contactus"),
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600))),
+              onPressed: contractUsEmail
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(),
+              child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 35),
+                  leading: Text(
+                      CustomeLocalizaation.of(context)
+                          .getTranslateValue("settings_rateapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: () {},
@@ -123,16 +167,9 @@ class _SettingsPageState extends State<SettingsPage>
               padding: EdgeInsets.only(),
               child: ListTile(
                   contentPadding: EdgeInsets.only(left: 35),
-                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_rateapp"),
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600))),
-              onPressed: () {},
-            ),
-            FlatButton(
-              padding: EdgeInsets.only(),
-              child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 35),
-                  leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_shareapp"),
+                  leading: Text(
+                      CustomeLocalizaation.of(context)
+                          .getTranslateValue("settings_shareapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
               onPressed: shareApplicationSocial,
