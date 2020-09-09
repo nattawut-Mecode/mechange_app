@@ -9,6 +9,19 @@ class CurrencyPage extends StatefulWidget {
 }
 
 class _CurrencyPageState extends State<CurrencyPage> {
+
+  List<Widget> listItem = [
+    ExchangerShimer(),
+    ExchangerShimer(),
+    ExchangerShimer(),
+  ];
+
+  Future loadRealSampleListExchanger() async {
+    setState(() {
+      listItem.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -17,15 +30,11 @@ class _CurrencyPageState extends State<CurrencyPage> {
       ),
       child: RefreshIndicator(
         onRefresh: () async {
-          return await Future.delayed(Duration(seconds: 3));
+          return await loadRealSampleListExchanger();
         },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            ExchangerShimer(),
-            ExchangerShimer(),
-            ExchangerShimer(),
-          ],
+          children: listItem.map((e)=> e).toList()
         ),
       ),
     );
