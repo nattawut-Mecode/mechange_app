@@ -7,6 +7,7 @@ import 'package:mechange_app/widgets/calculate_bottomsheet.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
+import 'data/infomation.dart';
 import 'internationalization/custome_internationalization.dart';
 import 'internationalization/util.dart';
 import 'models/language.dart';
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             selectedIndex.selectedIndex == 0
                 ? SvgPicture.asset(
-                    "assets/logos/Logo_White_nobg.svg",
+                    Infomation.assetsLogoNoBG,
                     width: 30,
                     height: 30,
                   )

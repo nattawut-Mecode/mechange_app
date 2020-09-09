@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mechange_app/themes/themes.dart';
 
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -83,8 +85,7 @@ class _SettingsPageState extends State<SettingsPage>
     final Uri params = Uri(
       scheme: 'mailto',
       path: Infomation.contractEmail,
-      query:
-          'subject=Contract US&body=',
+      query: 'subject=Contract US&body=',
     );
 
     var url = params.toString();
@@ -93,6 +94,37 @@ class _SettingsPageState extends State<SettingsPage>
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  aboutApplication() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            titlePadding: EdgeInsets.only(left: 25, top: 10),
+            title: ListTile(
+              contentPadding: EdgeInsets.only(),
+              leading: SvgPicture.asset(Infomation.assetsLogoColor,width: 35,height: 35,),
+              title: Text(
+                "MeChange",
+                style: TextStyle(fontSize: 20),
+              ),
+              subtitle: Text("v1.0"),
+            ),
+            actions: [
+              FlatButton(
+                textColor: ThemeApp.primaryColor,
+                child: Text("View Licenses"),
+                onPressed: () {},
+              ),
+              FlatButton(
+                textColor: ThemeApp.primaryColor,
+                child: Text("Close"),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -116,7 +148,7 @@ class _SettingsPageState extends State<SettingsPage>
                           .getTranslateValue("settings_about"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
-              onPressed: () {},
+              onPressed: aboutApplication,
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 35),
@@ -142,16 +174,15 @@ class _SettingsPageState extends State<SettingsPage>
                   }),
             ),
             FlatButton(
-              padding: EdgeInsets.only(),
-              child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 35),
-                  leading: Text(
-                      CustomeLocalizaation.of(context)
-                          .getTranslateValue("settings_contactus"),
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600))),
-              onPressed: contractUsEmail
-            ),
+                padding: EdgeInsets.only(),
+                child: ListTile(
+                    contentPadding: EdgeInsets.only(left: 35),
+                    leading: Text(
+                        CustomeLocalizaation.of(context)
+                            .getTranslateValue("settings_contactus"),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600))),
+                onPressed: contractUsEmail),
             FlatButton(
               padding: EdgeInsets.only(),
               child: ListTile(
