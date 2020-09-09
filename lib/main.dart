@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mechange_app/widgets/calculate_bottomsheet.dart';
+import 'package:mechange_app/components/shimmer_exchanger_card.dart';
+
 
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
+import 'components/calculate_bottomsheet.dart';
 import 'data/infomation.dart';
 import 'internationalization/custome_internationalization.dart';
 import 'internationalization/util.dart';
@@ -16,7 +18,7 @@ import 'themes/themes.dart';
 import 'provider/bottom_navigation_index.dart';
 import 'provider/is_buy.dart';
 import 'provider/theme.dart';
-import 'widgets/country_dropdown.dart';
+import 'components/country_dropdown.dart';
 import 'pages/settings.dart';
 
 void main() {
@@ -92,7 +94,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> _pages = [
-    Container(),
+    Container(
+      child: Column(
+        children: [
+          ExchangerShimer(),
+          ExchangerShimer(),
+          ExchangerShimer(),
+        ],
+      ),
+    ),
     Container(),
     Container(),
     Container(),
