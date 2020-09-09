@@ -114,12 +114,12 @@ class _SettingsPageState extends State<SettingsPage>
             actions: [
               FlatButton(
                 textColor: ThemeApp.primaryColor,
-                child: Text("View Licenses"),
+                child: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_licenses")),
                 onPressed: () {},
               ),
               FlatButton(
                 textColor: ThemeApp.primaryColor,
-                child: Text("Close"),
+                child: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_close")),
                 onPressed: () => Navigator.pop(context),
               )
             ],
