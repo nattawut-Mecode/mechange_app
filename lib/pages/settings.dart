@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import '../internationalization/custome_internationalization.dart';
 import '../provider/language.dart';
@@ -18,18 +20,6 @@ class _SettingsPageState extends State<SettingsPage>
   AnimationController _controller;
 
   bool isDarkMode = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
 
   Widget languageButton(bool active, Function action, String text) {
     return SizedBox(
@@ -75,6 +65,16 @@ class _SettingsPageState extends State<SettingsPage>
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  shareApplicationSocial(){
+    Share.share("https://apps.apple.com/th/app/mechange-thai-baht/id1221797659");
   }
 
   @override
@@ -135,11 +135,17 @@ class _SettingsPageState extends State<SettingsPage>
                   leading: Text(CustomeLocalizaation.of(context).getTranslateValue("settings_shareapp"),
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600))),
-              onPressed: () {},
+              onPressed: shareApplicationSocial,
             ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }

@@ -33,6 +33,7 @@ dependencies:
   provider: ^4.3.2+1
   dio: ^3.0.10
   animations: ^1.1.2
+  share: ^0.6.5
 
 dev_dependencies:
   flutter_test:

@@ -74,7 +74,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
           style: TextStyle(fontSize: 14, fontFamily: "Lato"),
           decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: "Amount (" + widget.form + ")",
+            hintText: "Amount (" + fromDropDownValue + ")",
           ),
         ),
       ),
@@ -221,7 +221,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
                       decoration: TextDecoration.underline))),
           Container(
               margin: const EdgeInsets.only(top: 15),
-              child: Text("X.XXXX " + widget.to,
+              child: Text("X.XXXX " + toDropDownValue,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
