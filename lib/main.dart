@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mechange_app/components/shimmer_exchanger_card.dart';
 
 
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
+import 'pages/currency.dart';
 import 'components/calculate_bottomsheet.dart';
 import 'data/infomation.dart';
 import 'internationalization/custome_internationalization.dart';
@@ -94,15 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> _pages = [
-    Container(
-      child: Column(
-        children: [
-          ExchangerShimer(),
-          ExchangerShimer(),
-          ExchangerShimer(),
-        ],
-      ),
-    ),
+    CurrencyPage(),
     Container(),
     Container(),
     Container(),
