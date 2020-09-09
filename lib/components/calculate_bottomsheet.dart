@@ -48,7 +48,7 @@ class _CalculatorBottomSheetState extends State<CalculatorBottomSheet>
         child: Text(
           "Calculate",
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: themeProvider.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white),
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         color: Colors.green,
         disabledColor: themeProvider.brightness == Brightness.dark? Colors.grey[600]:ThemeApp.disableColor,
