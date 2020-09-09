@@ -313,6 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: theme.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white,
         onTap: (index) {
           selectedIndex.changeSelectedIndex(index);
         },
