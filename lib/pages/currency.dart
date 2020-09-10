@@ -21,7 +21,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
   Future loadRealSampleListExchanger() async {
     setState(() {
       listItem.clear();
-      listItem.add(ExchangerCard());
+      listItem.add(ExchangerCard(exchangerStr: "12vic",buy: 0.225,sell: 0.350));
     });
   }
 
