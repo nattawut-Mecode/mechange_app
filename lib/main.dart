@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter/scheduler.dart';
+import 'package:syncfusion_flutter_core/core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
-
-
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
@@ -22,6 +22,7 @@ import 'components/country_dropdown.dart';
 import 'pages/settings.dart';
 
 void main() {
+  SyncfusionLicense.registerLicense("MTExMUAzMTM4MmUzMjJlMzBJaWF3ZHF1ZHBMa1lvQmRCUHZlWThOSWhjNlNSVkxjVE92VGVmZ0F5akQ0PQ==");
   runApp(
     MultiProvider(providers: [
     ChangeNotifierProvider(

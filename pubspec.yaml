@@ -28,7 +28,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_svg: ^0.18.1
   shared_preferences: ^0.5.7+1
-  syncfusion_flutter_charts: ^18.1.42
   http: ^0.12.1
   provider: ^4.3.2+1
   dio: ^3.0.10
@@ -36,6 +35,8 @@ dependencies:
   share: ^0.6.5
   url_launcher: ^5.5.3
   shimmer: ^1.1.1
+  syncfusion_flutter_charts:
+      path: C:\Program Files (x86)\Syncfusion\Essential Studio\Flutter\18.2.0.44\Packages\flutter_charts
 
 dev_dependencies:
   flutter_test:
