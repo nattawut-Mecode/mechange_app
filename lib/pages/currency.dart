@@ -13,9 +13,9 @@ class CurrencyPage extends StatefulWidget {
 
 class _CurrencyPageState extends State<CurrencyPage> {
   List<Widget> listItem = [
-    ExchangerShimer(),
-    ExchangerShimer(),
-    ExchangerShimer()
+    ShimmerExchangerCard(),
+    ShimmerExchangerCard(),
+    ShimmerExchangerCard()
   ];
 
   Future loadRealSampleListExchanger() async {

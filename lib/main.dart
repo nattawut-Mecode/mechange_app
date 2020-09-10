@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
+import 'components/shimmer_trends_currency.dart';
 import 'pages/currency.dart';
 import 'components/calculate_bottomsheet.dart';
 import 'data/infomation.dart';
@@ -25,11 +26,13 @@ import 'pages/settings.dart';
 import 'components/trends_currency.dart';
 
 void main() {
-  SyncfusionLicense.registerLicense("FT8mJyc2IWhia31hfWN9Z2doYmF8YGJ8ampqanNiYmlmamlmanMDHmgmPT88MDgxKiA2JyYjEyAqPTA1JiA6PD19MDw+");
-  runApp(
-    MultiProvider(providers: [
+  SyncfusionLicense.registerLicense(
+      "FT8mJyc2IWhia31hfWN9Z2doYmF8YGJ8ampqanNiYmlmamlmanMDHmgmPT88MDgxKiA2JyYjEyAqPTA1JiA6PD19MDw+");
+  runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-        create: (_) => ThemeProvider(themePrimary: ThemeApp.primaryColor,brightness: SchedulerBinding.instance.window.platformBrightness)),
+        create: (_) => ThemeProvider(
+            themePrimary: ThemeApp.primaryColor,
+            brightness: SchedulerBinding.instance.window.platformBrightness)),
     ChangeNotifierProvider(create: (_) => BottomNavigationIndexProvider()),
     ChangeNotifierProvider(create: (_) => BuyProvider()),
     ChangeNotifierProvider(
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.green,
           brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: language.language == Language.TH?"Kanit":"Raleway"),
+          fontFamily: language.language == Language.TH ? "Kanit" : "Raleway"),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -88,9 +91,15 @@ class _MyHomePageState extends State<MyHomePage> {
     "RUB",
   ];
 
-  double randomDouble(){
+  double randomDouble() {
     return new Random().nextDouble();
   }
+
+  List _listItem = [
+    ShimmerTrendsCurrency(),
+    ShimmerTrendsCurrency(),
+    ShimmerTrendsCurrency()
+  ];
 
   List _listTitle(BuildContext context) {
     return [
@@ -102,19 +111,22 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
+  /*TrendsCurrency(shortCurrency: "THB",exchnageRate: Random().nextDouble(),isLike: true,isExpand: false,),
+              TrendsCurrency(shortCurrency: "IDR",exchnageRate:Random().nextDouble(),isLike: true,isExpand: true,),
+              TrendsCurrency(shortCurrency: "USD",exchnageRate: Random().nextDouble(),isLike: true,isExpand: true,)
+              */
+
   List<Widget> _pages = [
     CurrencyPage(),
     Container(
-      color: Color.fromRGBO(240, 240, 240,1),
+      color: Color.fromRGBO(240, 240, 240, 1),
       child: Container(
-        margin: const EdgeInsets.only(left: 19,top: 15,right: 19,bottom: 15),
-        child: ListView(
-          children: <Widget>[
-            TrendsCurrency(shortCurrency: "THB",exchnageRate: Random().nextDouble(),isLike: true,isExpand: false,),
-            TrendsCurrency(shortCurrency: "IDR",exchnageRate:Random().nextDouble(),isLike: true,isExpand: true,),
-            TrendsCurrency(shortCurrency: "USD",exchnageRate: Random().nextDouble(),isLike: true,isExpand: true,)
-          ],
-        ),
+        margin: const EdgeInsets.only(left: 19, top: 15, right: 19, bottom: 15),
+        child: ListView(children: [
+          ShimmerTrendsCurrency(),
+          ShimmerTrendsCurrency(),
+          ShimmerTrendsCurrency()
+        ]),
       ),
     ),
     Container(),
@@ -336,7 +348,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: theme.brightness == Brightness.dark? ThemeApp.darkColor:Colors.white,
+        backgroundColor: theme.brightness == Brightness.dark
+            ? ThemeApp.darkColor
+            : Colors.white,
         onTap: (index) {
           selectedIndex.changeSelectedIndex(index);
         },

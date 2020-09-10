@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ExchangerShimer extends StatelessWidget {
+class ShimmerExchangerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

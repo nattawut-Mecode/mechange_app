@@ -36,31 +36,34 @@ class TrendsCurrencyState extends State<TrendsCurrency>
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
 
-  String getTrendName(TrendCurrencyFilterType type){
-    switch(type){
+  String getTrendName(TrendCurrencyFilterType type) {
+    switch (type) {
       case TrendCurrencyFilterType.Day1:
         return "1D";
-      break;
+        break;
 
       case TrendCurrencyFilterType.Week1:
         return "1W";
-      break;
+        break;
 
       case TrendCurrencyFilterType.Month1:
         return "1M";
-      break;
+        break;
 
       case TrendCurrencyFilterType.Month3:
         return "3M";
-      break;
+        break;
 
       case TrendCurrencyFilterType.Year1:
         return "1Y";
-      break;
+        break;
 
       case TrendCurrencyFilterType.Year5:
         return "5Y";
-      break;
+        break;
+
+      default:
+        return "1D";
     }
   }
 
@@ -170,7 +173,7 @@ class TrendsCurrencyState extends State<TrendsCurrency>
     );
   }
 
-  Widget filterButton(TrendCurrencyFilterType type,int index) {
+  Widget filterButton(TrendCurrencyFilterType type, int index) {
     return Expanded(
       child: FlatButton(
         padding: EdgeInsets.only(),
@@ -200,7 +203,6 @@ class TrendsCurrencyState extends State<TrendsCurrency>
     super.initState();
     _controller = AnimationController(vsync: this);
     isLike = this.widget.isLike;
-    print(widget.shortCurrency);
     changeFilterMode(TrendCurrencyFilterType.Day1);
   }
 
@@ -385,12 +387,12 @@ class TrendsCurrencyState extends State<TrendsCurrency>
                 margin: const EdgeInsets.only(left: 12.5, right: 12.5),
                 child: Row(
                   children: <Widget>[
-                    filterButton(TrendCurrencyFilterType.Day1,0),
-                    filterButton(TrendCurrencyFilterType.Week1,1),
+                    filterButton(TrendCurrencyFilterType.Day1, 0),
+                    filterButton(TrendCurrencyFilterType.Week1, 1),
                     filterButton(TrendCurrencyFilterType.Month1, 2),
                     filterButton(TrendCurrencyFilterType.Month3, 3),
                     filterButton(TrendCurrencyFilterType.Year1, 4),
-                    filterButton(TrendCurrencyFilterType.Year5,5)
+                    filterButton(TrendCurrencyFilterType.Year5, 5)
                   ],
                 ),
               ),
