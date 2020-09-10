@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../themes/themes.dart';
 import '../components/shimmer_exchanger_card.dart';
-import '../components/exchanger_cart.dart';
+import '../components/exchanger_card.dart';
 
 class CurrencyPage extends StatefulWidget {
   @override

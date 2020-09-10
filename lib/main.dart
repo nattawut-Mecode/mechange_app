@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
           primaryColor: Colors.green,
+          accentColor: Colors.green,
           brightness: theme.brightness,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: language.language == Language.TH?"Kanit":"Raleway"),

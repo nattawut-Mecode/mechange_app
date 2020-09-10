@@ -18,14 +18,12 @@ class ExchangerCard extends StatefulWidget {
 }
 
 class _ExchangerCardState extends State<ExchangerCard> {
-
-  Widget iconExchanger(){
+  Widget iconExchanger() {
     return Container(
-                  width: 60,
-                  height: 60,
-                  child: Image.asset(
-                      Exchanger.getPngfromSortName(widget.exchangerStr)),
-                );
+      width: 60,
+      height: 60,
+      child: Image.asset(Exchanger.getPngfromSortName(widget.exchangerStr)),
+    );
   }
 
   Widget buySellText(BuyProvider buyProvider) {
