@@ -337,17 +337,17 @@ packages:
   syncfusion_flutter_charts:
     dependency: "direct main"
     description:
-      path: "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\Flutter\\18.2.0.44\\Packages\\flutter_charts"
-      relative: false
-    source: path
-    version: "18.2.44"
+      name: syncfusion_flutter_charts
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "18.2.57"
   syncfusion_flutter_core:
     dependency: transitive
     description:
-      path: "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\Flutter\\18.2.0.44\\Packages\\flutter_core"
-      relative: false
-    source: path
-    version: "18.2.44"
+      name: syncfusion_flutter_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "18.2.57"
   term_glyph:
     dependency: transitive
     description:

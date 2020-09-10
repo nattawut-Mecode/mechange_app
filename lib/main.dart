@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/scheduler.dart';
@@ -20,9 +22,10 @@ import 'provider/is_buy.dart';
 import 'provider/theme.dart';
 import 'components/country_dropdown.dart';
 import 'pages/settings.dart';
+import 'components/trends_currency.dart';
 
 void main() {
-  SyncfusionLicense.registerLicense("MTExMUAzMTM4MmUzMjJlMzBJaWF3ZHF1ZHBMa1lvQmRCUHZlWThOSWhjNlNSVkxjVE92VGVmZ0F5akQ0PQ==");
+  SyncfusionLicense.registerLicense("FT8mJyc2IWhia31hfWN9Z2doYmF8YGJ8ampqanNiYmlmamlmanMDHmgmPT88MDgxKiA2JyYjEyAqPTA1JiA6PD19MDw+");
   runApp(
     MultiProvider(providers: [
     ChangeNotifierProvider(
@@ -84,6 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
     "RUB",
   ];
 
+  double randomDouble(){
+    return new Random().nextDouble();
+  }
+
   List _listTitle(BuildContext context) {
     return [
       CustomeLocalizaation.of(context).getTranslateValue("homepage_title"),
@@ -96,7 +103,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _pages = [
     CurrencyPage(),
-    Container(),
+    Container(
+      color: Color.fromRGBO(240, 240, 240,1),
+      child: Container(
+        margin: const EdgeInsets.only(left: 19,top: 15,right: 19,bottom: 15),
+        child: ListView(
+          children: <Widget>[
+            TrendsCurrency(shortCurrency: "THB",exchnageRate: Random().nextDouble(),isLike: true,isExpand: false,),
+            TrendsCurrency(shortCurrency: "IDR",exchnageRate:Random().nextDouble(),isLike: true,isExpand: true,),
+            TrendsCurrency(shortCurrency: "USD",exchnageRate: Random().nextDouble(),isLike: true,isExpand: true,)
+          ],
+        ),
+      ),
+    ),
     Container(),
     Container(),
     SettingsPage()
