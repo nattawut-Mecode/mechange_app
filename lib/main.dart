@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/scheduler.dart';
+import 'package:mechange_app/pages/news.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
@@ -114,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> _pages = [
     CurrencyPage(),
     TrendsPage(),
-    Container(),
+    NewsPage(),
     Container(),
     SettingsPage()
   ];
