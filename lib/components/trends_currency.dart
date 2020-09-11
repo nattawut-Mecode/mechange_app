@@ -218,7 +218,7 @@ class TrendsCurrencyState extends State<TrendsCurrency>
         duration: Duration(milliseconds: 350),
         width: MediaQuery.of(context).size.width,
         height: isExpand ? 260 : 135,
-        margin: const EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 12.5,left: 22.5,right: 22.5),
         child: Card(
           margin: const EdgeInsets.all(0),
           child: Column(
