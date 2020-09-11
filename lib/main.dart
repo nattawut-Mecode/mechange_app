@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 
+import 'pages/trends.dart';
 import 'components/shimmer_trends_currency.dart';
 import 'pages/currency.dart';
 import 'components/calculate_bottomsheet.dart';
@@ -95,12 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Random().nextDouble();
   }
 
-  List _listItem = [
-    ShimmerTrendsCurrency(),
-    ShimmerTrendsCurrency(),
-    ShimmerTrendsCurrency()
-  ];
-
   List _listTitle(BuildContext context) {
     return [
       CustomeLocalizaation.of(context).getTranslateValue("homepage_title"),
@@ -118,17 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _pages = [
     CurrencyPage(),
-    Container(
-      color: Color.fromRGBO(240, 240, 240, 1),
-      child: Container(
-        margin: const EdgeInsets.only(left: 19, top: 15, right: 19, bottom: 15),
-        child: ListView(children: [
-          ShimmerTrendsCurrency(),
-          ShimmerTrendsCurrency(),
-          ShimmerTrendsCurrency()
-        ]),
-      ),
-    ),
+    TrendsPage(),
     Container(),
     Container(),
     SettingsPage()
